@@ -1,4 +1,3 @@
-require 'pry'
 require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
@@ -129,7 +128,7 @@ task :'setup:db:database_yml' => :environment do
   # Virtual Host configuration file
   database_yml = <<-DATABASE.dedent
     #{rails_env}:
-      adapter: sqlite3
+      adapter: mysql2
       encoding: utf8
       database: #{db_name}
       username: #{db_username}
@@ -249,7 +248,7 @@ task :deploy => :environment do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
-    # invoke :'rails:db_migrate'
+    invoke :'rails:db_migrate'
     invoke :'rails:assets_precompile:force'
 
     to :launch do
