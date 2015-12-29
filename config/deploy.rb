@@ -182,7 +182,7 @@ task :'setup:apache' => :environment do
       ServerAdmin user@your-website.com
       ServerName #{get_fqdn(server, version)}
       DocumentRoot #{deploy_to!}/#{current_path!}/public
-      RailsEnv #{rails_env}
+      RailsEnv production
       <Directory #{deploy_to!}/#{current_path!}/public>
         Options -MultiViews
         AllowOverride all
