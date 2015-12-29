@@ -43,7 +43,7 @@ task :environment do
   end
 
   # Remote application folder
-  set :deploy_to, "/home/rails/projects/server/#{version}"
+  set :deploy_to, "/var/www/#{version}"
 
   # Set the basic environment variables based on the server and version
   case server
