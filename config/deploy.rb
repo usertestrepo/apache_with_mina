@@ -192,9 +192,7 @@ task :'setup:apache' => :environment do
       ErrorDocument 503 /503.html
       RewriteEngine On
       RewriteCond %{REQUEST_URI} !.(css|gif|jpg|png)$
-      RewriteCond %{DOCUMENT_ROOT}/503.html -f
-      RewriteCond %{SCRIPT_FILENAME} !503.html
-      RewriteRule ^.*$ - [redirect=503,last]
+  
     </VirtualHost>
   HOSTFILE
   queue! %{
