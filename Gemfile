@@ -43,3 +43,6 @@ gem 'pg'
 group :development do
   gem 'pry'
 end
+
+gem 'mina'
+gem 'mysql2'
