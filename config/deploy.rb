@@ -177,39 +177,52 @@ task :'setup:apache' => :environment do
   fqdn_ext = external_fqdn(server, version)
   # Virtual Host configuration file
   vhost = <<-HOSTFILE.dedent
+   
     <VirtualHost *:80>
-      ServerAdmin #{get_fqdn(server, version)}
-      ServerName #{get_fqdn(server, version)}
-      DocumentRoot #{deploy_to!}/#{current_path!}/public
   
-     <Directory />
-        Options Indexes FollowSymLinks MultiViews
-        AllowOverride None
-      </Directory>
+    ServerAdmin #{get_fqdn(server, version)}
+    ServerName #{get_fqdn(server, version)}
 
-      <Directory /var/www/rails_apps/my_app_name/current/public>
-        Options -MultiViews
-        AllowOverride All
-        Order allow,deny
-        allow from all
-      </Directory>
+    DocumentRoot #{deploy_to!}/special_version/current
 
-      ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
-      <Directory "/usr/lib/cgi-bin">
-        AllowOverride None
-        Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-        Order allow,deny
-        Allow from all
-      </Directory>
-      ErrorLog ${APACHE_LOG_DIR}/error.log
+    <Directory />
+      Options FollowSymLinks
+      AllowOverride None
+    </Directory>
+          
+    <Directory #{deploy_to!}/special_version/current>
+      Options Indexes FollowSymLinks MultiViews
+      AllowOverride None
+      Order allow,deny
+      allow from all
+    </Directory>
 
-      # Possible values include: debug, info, notice, warn, error, crit,
-      # alert, emerg.
-      LogLevel warn
+    ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
 
-      CustomLog ${APACHE_LOG_DIR}/access.log combined
-      
-    </VirtualHost>
+    <Directory "/usr/lib/cgi-bin">
+      AllowOverride None
+      Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+      Order allow,deny
+      Allow from all
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+
+    LogLevel warn
+
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    Alias /doc/ "/usr/share/doc/"
+    
+    <Directory "/usr/share/doc/">
+      Options Indexes MultiViews FollowSymLinks
+      AllowOverride None
+      Order deny,allow
+      Deny from all
+      Allow from 127.0.0.1/255.0.0.0 ::1/128
+    </Directory>
+
+  </VirtualHost>
   HOSTFILE
   queue! %{
     echo "-----> Create Temporary Apache Virtual Host"
