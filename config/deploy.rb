@@ -270,7 +270,7 @@ end
 def main_domain(server)
   case server
   when 'qa'
-    "test.com"
+    "development-test.com"
   when 'prod'
     "prod-test.com"
   end
