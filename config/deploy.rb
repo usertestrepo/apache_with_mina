@@ -187,7 +187,7 @@ task :'setup:apache' => :environment do
         Options -MultiViews
         AllowOverride all
       </Directory>
-      PassengerMinInstances 5
+      
       # Maintenance page
       ErrorDocument 503 /503.html
       RewriteEngine On
