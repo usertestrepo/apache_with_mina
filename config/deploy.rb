@@ -178,7 +178,7 @@ task :'setup:apache' => :environment do
   # Virtual Host configuration file
   vhost = <<-HOSTFILE.dedent
     <VirtualHost *:80>
-      ServerAdmin user@your-website.com
+      ServerAdmin #{get_fqdn(server, version)}
       ServerName #{get_fqdn(server, version)}
       DocumentRoot #{deploy_to!}/#{current_path!}/public
   
@@ -270,9 +270,9 @@ end
 def main_domain(server)
   case server
   when 'qa'
-    "qa-domain.com"
+    "test.com"
   when 'prod'
-    "prod-domain.com"
+    "prod-test.com"
   end
 end
 
