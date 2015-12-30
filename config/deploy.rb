@@ -179,50 +179,49 @@ task :'setup:apache' => :environment do
   vhost = <<-HOSTFILE.dedent
    
     <VirtualHost *:80>
-  
-    ServerAdmin #{get_fqdn(server, version)}
-    ServerName #{get_fqdn(server, version)}
+      ServerAdmin #{get_fqdn(server, version)}
+      ServerName #{get_fqdn(server, version)}
 
-    DocumentRoot #{deploy_to!}/special_version/current
+      DocumentRoot #{deploy_to!}/special_version/current
 
-    <Directory />
-      Options FollowSymLinks
-      AllowOverride None
-    </Directory>
+      <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+      </Directory>
           
-    <Directory #{deploy_to!}/special_version/current>
-      Options Indexes FollowSymLinks MultiViews
-      AllowOverride None
-      Order allow,deny
-      allow from all
-    </Directory>
+      <Directory #{deploy_to!}/special_version/current>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride None
+        Order allow,deny
+        allow from all
+      </Directory>
 
-    ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+      ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
 
-    <Directory "/usr/lib/cgi-bin">
-      AllowOverride None
-      Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-      Order allow,deny
-      Allow from all
-    </Directory>
+      <Directory "/usr/lib/cgi-bin">
+        AllowOverride None
+        Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+        Order allow,deny
+        Allow from all
+      </Directory>
 
-    ErrorLog ${APACHE_LOG_DIR}/error.log
+      ErrorLog ${APACHE_LOG_DIR}/error.log
 
-    LogLevel warn
+      LogLevel warn
 
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
+      CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-    Alias /doc/ "/usr/share/doc/"
+      Alias /doc/ "/usr/share/doc/"
     
-    <Directory "/usr/share/doc/">
-      Options Indexes MultiViews FollowSymLinks
-      AllowOverride None
-      Order deny,allow
-      Deny from all
-      Allow from 127.0.0.1/255.0.0.0 ::1/128
-    </Directory>
+      <Directory "/usr/share/doc/">
+        Options Indexes MultiViews FollowSymLinks
+        AllowOverride None
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.1/255.0.0.0 ::1/128
+      </Directory>
 
-  </VirtualHost>
+    </VirtualHost>
   HOSTFILE
   queue! %{
     echo "-----> Create Temporary Apache Virtual Host"
