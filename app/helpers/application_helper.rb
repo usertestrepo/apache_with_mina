@@ -1,3 +1,3 @@
 module ApplicationHelper
-	#lfghksglkh
+
 end
