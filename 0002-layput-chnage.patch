@@ -1,0 +1,25 @@
+From 99619790962ac5e0c431d49787db8ed2ff867cff Mon Sep 17 00:00:00 2001
+From: koshlendra <dipakg.ror@gmail.com>
+Date: Wed, 6 Jan 2016 11:34:03 +0530
+Subject: [PATCH 2/2] layput chnage
+
+---
+ app/views/layouts/application.html.erb |    3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/app/views/layouts/application.html.erb b/app/views/layouts/application.html.erb
+index b260548..fc6c233 100644
+--- a/app/views/layouts/application.html.erb
++++ b/app/views/layouts/application.html.erb
+@@ -10,5 +10,8 @@
+ 
+ <%= yield %>
+ 
++
++
++
+ </body>
+ </html>
+-- 
+1.7.9.5
+
